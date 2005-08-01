@@ -1,0 +1,12 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         SVN-Pusher
+version:      0.00_03
+version_from: Pusher.pm
+installdirs:  site
+requires:
+    SVN::Core:                     0.37.0
+    URI::Escape:                   0
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17
