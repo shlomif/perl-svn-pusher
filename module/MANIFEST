@@ -3,5 +3,5 @@ MANIFEST
 README
 CHANGES
 bin/svn-pusher
-lib/Pusher.pm
+lib/SVN/Pusher.pm
 META.yml                                 Module meta-data (added by MakeMaker)

@@ -1,7 +1,7 @@
 SVN::Pusher changelog:
 
 * 
-    - Placed Pusher.pm in lib/Pusher.pm
+    - Placed Pusher.pm in lib/SVN/Pusher.pm
 
 * 0.00_03 - forked from SVN-Push, converted the functionality to work with
 a modern SVN, and with what we wanted to do (just changeset propagation -

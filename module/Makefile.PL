@@ -7,7 +7,7 @@ WriteMakefile(
     AUTHOR              => 'Shlomi Fish <shlomif@iglu.org.il>',
     ABSTRACT            => 'Push to remote subversion repositories',
     NAME                => 'SVN::Pusher',
-    VERSION_FROM        => 'lib/Pusher.pm',
+    VERSION_FROM        => 'lib/SVN/Pusher.pm',
     PREREQ_PM           => {
         'SVN::Core'   => $required_svn,
         'URI::Escape' => '0',
