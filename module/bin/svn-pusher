@@ -2,7 +2,7 @@
 use strict;
 use lib qw{.} ;
 use SVN::Core '0.32';
-use SVN::Pusher;
+use SVN::Pusher::CmdLine;
 use Getopt::Long ;
 
 
@@ -92,7 +92,7 @@ sub do_push
 	%revs = (startrev => $start, endrev => $end) ;
 	}
 
-    my $m = SVN::Pusher->new( target  => $target,
+    my $m = SVN::Pusher::CmdLine->new( target  => $target,
                        	    source  => $source,
 			    %revs,
                        	    logmsg  => $options -> {message});
@@ -121,7 +121,7 @@ if (my $cmdopt_ref = main -> can ($cmdopt))
     my $ret = GetOptions (\%options, $cmdopt_ref->()) ;
 }
 
-main->can($cmdopt)->(\%options, @ARGV);
+main->can($cmdsub)->(\%options, @ARGV);
 
 
 =head1 AUTHORS

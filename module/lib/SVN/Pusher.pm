@@ -26,14 +26,14 @@ sub open_root {
 
 sub open_directory {
     my ($self,$path,$pb,undef,$pool) = @_;
-    print "U  $path\n" ;
+    $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});
     return $self->SUPER::open_directory ($path, $pb,
 					 $self->{mirror}{target_headrev}, $pool);
 }
 
 sub open_file {
     my ($self,$path,$pb,undef,$pool) = @_;
-    print "U  $path\n" ;
+    $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});    
     $self->{opening} = $path;
     return $self->SUPER::open_file ($path, $pb,
 				    $self->{mirror}{target_headrev}, $pool);
@@ -61,7 +61,7 @@ sub add_directory {
     my $path = shift;
     my $pb = shift;
     my ($cp_path,$cp_rev,$pool) = @_;
-    print "A  $path\n" ;
+    $self->obj->report({'op' => "file", 'file_op' => "A", 'path' => $path});    
     $self->SUPER::add_directory($path, $pb, @_);
 }
 
@@ -91,15 +91,21 @@ sub add_file {
     my $self = shift;
     my $path = shift;
     my $pb = shift;
-    print "A  $path\n" ;
-
+    $self->obj->report({'op' => "file", 'file_op' => "A", 'path' => $path});
     $self->SUPER::add_file($path, $pb, @_);
 }
 
 sub delete_entry {
     my ($self, $path, $rev, $pb, $pool) = @_;
-    print "D  $path\n" ;
+    $self->obj->report({'op' => "file", 'file_op' => "D", 'path' => $path});
     $self->SUPER::delete_entry ($path, $rev, $pb, $pool);
+}
+
+sub obj
+{
+    my $self = shift;
+
+    return $self->{mirror};
 }
 
 #sub close_edit {
@@ -170,6 +176,17 @@ use URI::Escape;
 
 # ------------------------------------------------------------------------
 
+sub report
+{
+    # Do nothing by default
+}
+
+sub report_msg
+{
+    my $self = shift;
+    my $msg = shift;
+    return $self->report({'op' => 'msg', 'msg' => $msg });
+}
 
 sub committed {
     my ($self, $date, $sourcerev, $rev, undef, undef, $pool) = @_;
@@ -185,7 +202,7 @@ sub committed {
     $self->{target_source_rev} = $sourcerev ;
     $self->{commit_num}++ ;
 
-    print "Committed revision $rev from revision $sourcerev.\n";
+    $self->report_msg("Committed revision $rev from revision $sourcerev.");
 }
 # ------------------------------------------------------------------------
 
@@ -274,10 +291,11 @@ sub do_init
         $self->{source_lastrev} = $self->{source_headrev} ; 
         }
 
-    print "Source: $self->{source}\n" ;
-    print "  Revision: $self->{source_headrev}\n" ; 
-    print "  Root:     $self->{source_root}\n" ;
-    print "  Path:     $self->{source_path} (rev: $self->{source_lastrev})\n" ; 
+        
+    $self->report_msg("Source: $self->{source}");
+    $self->report_msg("  Revision: $self->{source_headrev}");
+    $self->report_msg("  Root:     $self->{source_root}");
+    $self->report_msg("  Path:     $self->{source_path} (rev: $self->{source_lastrev})"); 
 
     $self->{target_ra} = SVN::Ra->new(url => $self->{target},
 			  auth   => $self->{auth},
@@ -291,10 +309,10 @@ sub do_init
     
     $self->{target_path}    = substr ($self -> {target}, length ($self->{target_root})) ||'/' ;
     
-    print "Target: $self->{target}\n" ;
-    print "  Revision: $self->{target_headrev}\n" ; 
-    print "  Root:     $self->{target_root}\n" ;
-    print "  Path:     $self->{target_path}\n" ; 
+    $self->report_msg( "Target: $self->{target}") ;
+    $self->report_msg("  Revision: $self->{target_headrev}") ; 
+    $self->report_msg("  Root:     $self->{target_root}") ;
+    $self->report_msg("  Path:     $self->{target_path}") ; 
     
     return 1 ;
     }
@@ -334,7 +352,7 @@ sub create_target
             log_msg => sub { ${$_[0]} = ":0:$uuid:-:" }) ;
     
     $ctx -> mkdir ([$self -> {target}]) ;
-    print "$self->{target} successfully created\n" ;
+    $self->report_msg("$self->{target} successfully created") ;
     }
 
 # ------------------------------------------------------------------------
@@ -367,7 +385,7 @@ sub run {
     
     return unless $endrev == -1 || $startrev <= $endrev;
 
-    print "Retrieving log information from $startrev to $endrev\n";
+    $self->report_msg("Retrieving log information from $startrev to $endrev");
 
     $self -> {source_ra} -> get_log (
         # paths
@@ -393,7 +411,7 @@ sub run {
 		          {
 		          my $e = $@ ;
 		          $e =~ s/ at .+$// ;
-		          print $e ; 
+		          $self->report_msg($e) ; 
 		          }
 		  });
 }
