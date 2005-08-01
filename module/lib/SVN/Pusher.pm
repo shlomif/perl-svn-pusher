@@ -168,20 +168,6 @@ See perldoc bin/svn-pusher for more documentation.
 use File::Spec;
 use URI::Escape;
 
-
-
-sub is_mirrored {
-    my ($repos, $path) = @_;
-
-    my $m = SVN::Pusher->new(target_path => $path,
-			     repos => $repos,
-			     pool => SVN::Pool->new,
-			     get_source => 1) or die $@;
-    eval { $m->init };
-    return if $@;
-    return $m;
-}
-
 # ------------------------------------------------------------------------
 
 
@@ -243,46 +229,6 @@ sub mirror
         undef);
     $reporter->finish_report ();
     }
-
-# ------------------------------------------------------------------------
-
-
-sub get_merge_back_editor {
-    my ($self, $msg, $committed) = @_;
-    # get ra commit editor for $self->{source}
-    my $ra = SVN::Ra->new(url => $self->{source},
-			  auth => $self->{auth},
-			  pool => $self->{pool},
-			  config => $self->{config},
-			  callback => 'SVN::Pusher::MyCallbacks');
-    my $youngest_rev = $ra->get_latest_revnum;
-
-    return ($youngest_rev,
-	    SVN::Delta::Editor->new ($ra->get_commit_editor ($msg, $committed)));
-}
-
-# ------------------------------------------------------------------------
-
-sub mergeback {
-    my ($self, $fromrev, $path, $rev) = @_;
-
-    # verify $path is copied from $self->{target_path}
-
-    # concat batch merge?
-    my $msg = $self->{fs}->revision_prop ($rev, 'svn:log');
-    $msg .= "\n\nmerged from rev $rev of repository ".$self->{fs}->get_uuid;
-
-    my $editor = $self->get_merge_back_editor ($msg,
-					       sub {warn "committed via RA"});
-
-    # dir_delta ($path, $fromrev, $rev) for commit_editor
-    SVN::Repos::dir_delta($self->{fs}->revision_root ($fromrev), $path,
-			  $SVN::Core::VERSION ge '0.36.0' ? '' : undef,
-			  $self->{fs}->revision_root ($rev), $path,
-			  $editor, undef,
-			  1, 1, 0, 1
-			 );
-}
 
 # ------------------------------------------------------------------------
 
@@ -393,59 +339,6 @@ sub create_target
 
 # ------------------------------------------------------------------------
 
-sub walk 
-    {
-    my ($source, $target, $pattern, $repositories, $create, $logmsg) = @_ ;
-   
-    my $self = SVN::Pusher -> new ;
-    $source =~ s#/$## ;
-    $target =~ s#/$## ;
-
-    $repositories ||= [''] ;
-    my $ctx = SVN::Client -> new (  auth    => $self -> {auth}, 
-                                    config  => $self -> {config}) ;
-    
-    foreach my $repository (@$repositories)
-        {
-        my $repos = $repository?"/$repository":'' ;
-        my $files = $ctx -> ls ("$source$repos", 'HEAD', 0) ;
-        if ($pattern)
-            {
-            foreach my $file (sort keys %$files)
-                {
-                next if ($file !~ /$pattern/) ;
-                print "*** Process $source$repos/$file\n" ;
-                eval {
-                    my $push = $self -> new (source => "$source$repos/$file", 
-                                             target => "$target$repos/$file",
-                                             logmsg => $logmsg) ;
-                    if ($push -> init ($create) > 0)
-                        {
-                        $push -> run ;
-                        }
-                    } ;                
-                print $@ if ($@) ;
-                }
-            }
-        else
-            {
-            print "*** Process $source$repos\n" ;
-            eval {
-                my $push = $self -> new (source => "$source$repos", 
-                                         target => "$target$repos",
-                                         logmsg => $logmsg) ;
-                if ($push -> init ($create) > 0)
-                    {
-                    $push -> run ;
-                    }
-                } ;                
-            print $@ if ($@) ;
-            }       
-        }    
-    }
-
-# ------------------------------------------------------------------------
-
 sub run {
     my $self   = shift;
 
@@ -513,7 +406,10 @@ Shlomi Fish E<lt>shlomif@iglu.org.ilE<gt>
 
 =head1 CREDITS
 
-A lot of ideas and code is taken from SVN::Mirror by
+Original SVN::Push module by Gerald Richter. Modified into SVN::Pusher
+by Shlomi Fish.
+
+A lot of ideas and code were taken from the SVN::Mirror module which is by
 Chia-liang Kao E<lt>clkao@clkao.orgE<gt>
 
 =head1 COPYRIGHT
