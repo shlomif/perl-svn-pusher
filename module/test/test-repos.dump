@@ -1,0 +1,128 @@
+SVN-fs-dump-format-version: 2
+
+UUID: 8a21b8b5-61e1-0310-868a-ae61f221f29d
+
+Revision-number: 0
+Prop-content-length: 56
+Content-length: 56
+
+K 8
+svn:date
+V 27
+2004-08-11T14:31:46.953213Z
+PROPS-END
+
+Revision-number: 1
+Prop-content-length: 118
+Content-length: 118
+
+K 7
+svn:log
+V 17
+Added the trunk.
+
+K 10
+svn:author
+V 6
+shlomi
+K 8
+svn:date
+V 27
+2004-08-11T14:32:04.986337Z
+PROPS-END
+
+Node-path: trunk
+Node-kind: dir
+Node-action: add
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
+Revision-number: 2
+Prop-content-length: 118
+Content-length: 118
+
+K 7
+svn:log
+V 17
+Creating Branches
+K 10
+svn:author
+V 6
+shlomi
+K 8
+svn:date
+V 27
+2004-08-11T14:32:19.237055Z
+PROPS-END
+
+Node-path: branches
+Node-kind: dir
+Node-action: add
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
+Revision-number: 3
+Prop-content-length: 114
+Content-length: 114
+
+K 7
+svn:log
+V 13
+Creating Tags
+K 10
+svn:author
+V 6
+shlomi
+K 8
+svn:date
+V 27
+2004-08-11T14:32:26.491523Z
+PROPS-END
+
+Node-path: tags
+Node-kind: dir
+Node-action: add
+Prop-content-length: 10
+Content-length: 10
+
+PROPS-END
+
+
+Revision-number: 4
+Prop-content-length: 118
+Content-length: 118
+
+K 7
+svn:log
+V 17
+Added hello.txt.
+
+K 10
+svn:author
+V 6
+shlomi
+K 8
+svn:date
+V 27
+2004-08-11T14:34:11.754702Z
+PROPS-END
+
+Node-path: trunk/hello.txt
+Node-kind: file
+Node-action: add
+Prop-content-length: 10
+Text-content-length: 39
+Text-content-md5: ac0eb689badf4bb850498c0e4a69dfcb
+Content-length: 49
+
+PROPS-END
+Hello World!
+
+This is Shlomi Fish here.
+
