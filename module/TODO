@@ -1,0 +1,6 @@
+* Remove the redundant stuff from the main module.
+
+* Separate the side-effects from the module and place them in an
+inherited module. The module should be perfectly quiet by default and not
+print anything. The derived module which will sub-class both classes, will
+do all the printing.
