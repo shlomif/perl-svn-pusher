@@ -4,10 +4,10 @@ use ExtUtils::MakeMaker;
 my $required_svn = '0.37.0';
 
 WriteMakefile(
-    AUTHOR              => 'Gerald Richter (richter@dev.ecos.de)',
+    AUTHOR              => 'Shlomi Fish <shlomif@iglu.org.il>',
     ABSTRACT            => 'Push to remote subversion repositories',
     NAME                => 'SVN::Pusher',
-    VERSION_FROM        => 'Pusher.pm',
+    VERSION_FROM        => 'lib/Pusher.pm',
     PREREQ_PM           => {
         'SVN::Core'   => $required_svn,
         'URI::Escape' => '0',
