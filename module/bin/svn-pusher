@@ -11,7 +11,7 @@ $| = 1;
 
 =head1 NAME
 
-svn-pusher - command line interface for remote Subversion repository push
+svn-pusher - command line interface for propagating Subversion changesets. 
 
 =head1 SYNOPSIS
 
@@ -52,7 +52,7 @@ the repository.
 
 Example:
 
-  svnpush push --create -r HEAD -m 'New Release' https://svn.example.com/repos https://svn2.example.com/release
+  svn-pusher push -r 4:6 -m 'New Release' https://svn.example.com/repos https://svn2.example.com/release
 
 This will push the HEAD revision of the first URL to the second URL. The
 direcory of the second URL will be created if it isn't there. If, since the
@@ -61,28 +61,9 @@ commited as one revision to the destination. If you leave out the -r option
 every revision in the source will be commited as one revision to the
 destination.
 
-=item walk [options] B<srcurl> B<desturl> B<regex> B<repos1> .. B<reposN> 
-
-Invoke the push of for all reositories underneath B<srcurl> to B<desturl> 
-given with as B<repos1> .. B<reposN>. Only directories matching B<regex>
-are replicated.
-
-Possible options:
-
-=over
-
-=item -c --create
-
-Initialzie B<desturl> for pushing if not already done
-
-=item -m --message=<text>
-
-Use <text> for B<every> commit that is done during push
-
 =back
 
-
-=back
+=back 
 
 =cut
 
@@ -96,23 +77,11 @@ sub do_help {
 
 # --------------------------------------------------------------------------
 
-sub opt_walk { return ('create|c', 'message|m:s') }
-
-sub do_walk 
-    {
-    die "$0 walk [--create] [--message=<text>] <source> <target> <pattern> [<repos1> .. <reposN>]\n" unless $#_ >= 2;
-    my ($options, $source, $target, $pattern, $logmsg) = @_;
-    my $m = SVN::Pusher::walk($source, $target, $pattern, [@_[3..$#_]],
-                             $options -> {create}, $options -> {message}) ;
-    }
-
-# --------------------------------------------------------------------------
-
 sub opt_push { return ('create|c', 'message|m:s', 'revision|r:s') }
 
 
 sub do_push 
-    {
+{
     die "$0 push [--create] [--message=<text>] [--revision=<from>:<to>] <source> <target>\n" unless $#_ >= 2;
     my ($options, $source, $target) = @_;
 
@@ -132,32 +101,8 @@ sub do_push
     	{
     	$m->run;
     	}
-    }
-
-# --------------------------------------------------------------------------
-
-sub do_check 
-    {
-    die "$0 check <source> <target>\n" unless $#_ >= 2;
-    my ($options, $source, $target) = @_ ;
-    my $m = SVN::Pusher->new(target => $target,
-                           source => $source);
-
-    $m->init;
-    }
-
-# --------------------------------------------------------------------------
-
-sub mergeback {
-    my ($path, $branch_path, $repospath, $rev) = @_;
-    my $pool = SVN::Pool->new_default;
-	
-    my $m = SVN::Pusher->new(target_path => $path, target => $repospath,
-			     pool => $pool, 
-			     get_source => 1);
-    $m->init;
-    $m->mergeback ($rev-1, $branch_path, $rev);
 }
+
 
 # --------------------------------------------------------------------------
 
@@ -168,18 +113,15 @@ my $cmdopt = "opt_$cmd" ;
 
 die "Command not recognized. Try $0 help\n" unless main->can($cmdsub);
 
-no strict 'refs';
-
 my %options ;
-if (main -> can ($cmdopt))
-    {
+if (my $cmdopt_ref = main -> can ($cmdopt))
+{
     eval { Getopt::Long::Configure ('bundling') } ;
     $@ = "" ;
-    my $ret = GetOptions (\%options, &$cmdopt()) ;
-    }
+    my $ret = GetOptions (\%options, $cmdopt_ref->()) ;
+}
 
-
-&$cmdsub(\%options, @ARGV);
+main->can($cmdopt)->(\%options, @ARGV);
 
 
 =head1 AUTHORS
@@ -189,7 +131,7 @@ Gerald Richter E<lt>richter@dev.ecos.deE<gt>
 
 =head1 CREDITS
 
-A lot of ideas and code is taken from SVN::Mirror by
+A lot of ideas and code were taken from SVN::Mirror which was written by
 Chia-liang Kao E<lt>clkao@clkao.orgE<gt>
 
 =head1 COPYRIGHT
