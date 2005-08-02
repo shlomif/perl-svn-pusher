@@ -7,8 +7,8 @@ SVN::Pusher changelog:
     - Created the $sp->report() method for a derived class to perform a
     print. Moved the print() themselves to SVN::Pusher::CmdLine. That way,
     the main module has no side effects.
-    - removed the create option in init()/cmdline/etc.
-    - adapted the documentation to the new version.
+    - Removed the create option in init()/cmdline/etc.
+    - Adapted the documentation to the new version.
 
     
 * 0.00_03 - forked from SVN-Push, converted the functionality to work with
