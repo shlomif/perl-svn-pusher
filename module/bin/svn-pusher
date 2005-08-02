@@ -15,11 +15,11 @@ svn-pusher - command line interface for propagating Subversion changesets.
 
 =head1 SYNOPSIS
 
-    % svn-pusher push http://hosta/path http://hostb/path
+    % svn-pusher push --revision=4:6 http://hosta/path http://hostb/path
 
 =head1 DESCRIPTION
 
-F<svn-pusher> propagats changesets from one Subversion repository
+F<svn-pusher> propagates changesets from one Subversion repository
 to another.
 
 =head1 COMMANDS
@@ -33,10 +33,6 @@ Invoke the push of B<srcurl> to B<desturl>
 Possible options:
 
 =over
-
-=item -c --create
-
-Initialzie B<desturl> for pushing if not already done
 
 =item -m --message=<text>
 
@@ -54,13 +50,6 @@ Example:
 
   svn-pusher push -r 4:6 -m 'New Release' https://svn.example.com/repos https://svn2.example.com/release
 
-This will push the HEAD revision of the first URL to the second URL. The
-direcory of the second URL will be created if it isn't there. If, since the
-last push, multiple revision had been commited to the source, they will be
-commited as one revision to the destination. If you leave out the -r option
-every revision in the source will be commited as one revision to the
-destination.
-
 =back
 
 =back 
@@ -77,12 +66,12 @@ sub do_help {
 
 # --------------------------------------------------------------------------
 
-sub opt_push { return ('create|c', 'message|m:s', 'revision|r:s') }
+sub opt_push { return ('message|m:s', 'revision|r:s') }
 
 
 sub do_push 
 {
-    die "$0 push [--create] [--message=<text>] [--revision=<from>:<to>] <source> <target>\n" unless $#_ >= 2;
+    die "$0 push [--message=<text>] [--revision=<from>:<to>] <source> <target>\n" unless $#_ >= 2;
     my ($options, $source, $target) = @_;
 
     my %revs ;
@@ -97,7 +86,7 @@ sub do_push
 			    %revs,
                        	    logmsg  => $options -> {message});
 
-    if ($m->init ($options -> {create}) > 0)
+    if ($m->init () > 0)
     	{
     	$m->run;
     	}
@@ -127,7 +116,8 @@ main->can($cmdsub)->(\%options, @ARGV);
 =head1 AUTHORS
 
 Shlomi Fish E<lt>shlomif@iglu.org.ilE<gt>
-Gerald Richter E<lt>richter@dev.ecos.deE<gt>
+
+(based on SVN::Push by Gerald Richter E<lt>richter@dev.ecos.deE<gt>)
 
 =head1 CREDITS
 

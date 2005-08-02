@@ -318,42 +318,16 @@ sub do_init
     }
 
 # ------------------------------------------------------------------------
-    
+
+# This method is essentialy do_init(). In the original SVN::Push there were
+# both init() and do_init() which were different from a reason. Here, they
+# are essentially the same.
 sub init 
-    {
+{
     my $self = shift;
-    my $create = shift ;
     
-    my $rc = $self -> do_init ;
-    if ($rc == -1 && $self -> {target_path} eq '/' && $create)
-        {
-        return 1 ;
-        }
-        
-    return $rc ;
-    }    
-
-# ------------------------------------------------------------------------
-
-sub create_target 
-    {
-    my ($self) = @_ ;
-   
-    
-    my $ra = SVN::Ra->new(url => $self -> {source},
- 			  auth => $self -> {auth},
- 			  config => $self -> {config});
-    
-    my $uuid = $ra->get_uuid ();
-    #print "source: $source\ntarget: $target\nuuid:   $uuid\n" ;
-    my $ctx = SVN::Client -> new (
- 			  auth => $self -> {auth},
- 			  config => $self -> {config},
-            log_msg => sub { ${$_[0]} = ":0:$uuid:-:" }) ;
-    
-    $ctx -> mkdir ([$self -> {target}]) ;
-    $self->report_msg("$self->{target} successfully created") ;
-    }
+    return $self -> do_init ;
+}    
 
 # ------------------------------------------------------------------------
 
@@ -419,8 +393,9 @@ sub run {
 
 =head1 AUTHORS
 
-Gerald Richter E<lt>richter@dev.ecos.deE<gt>
 Shlomi Fish E<lt>shlomif@iglu.org.ilE<gt>
+
+(based on SVN::Push by Gerald Richter E<lt>richter@dev.ecos.deE<gt>)
 
 =head1 CREDITS
 
