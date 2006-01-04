@@ -74,20 +74,26 @@ sub do_push
 
     my %revs ;
     if ($options -> {revision})
-	{
-        my ($start, $end) = split (/:/, $options -> {revision}, 2) ;	
-	%revs = (startrev => $start, endrev => $end) ;
-	}
+    {
+        if ($options->{revision} !~ /^(\d+|HEAD):(\d+|HEAD)$/)
+        {
+            die "Incorrect revision format - there should be two revisions separated by a colon (:).";
+        }
+        my ($start, $end) = ($1,$2);
+        %revs = (startrev => $start, endrev => $end) ;
+    }
 
-    my $m = SVN::Pusher::CmdLine->new( target  => $target,
-                       	    source  => $source,
-			    %revs,
-                       	    logmsg  => $options -> {message});
+    my $m = SVN::Pusher::CmdLine->new(
+        target  => $target,
+        source  => $source,
+        %revs,
+        logmsg  => $options -> {message}
+        );
 
     if ($m->init () > 0)
-    	{
-    	$m->run;
-    	}
+    {
+        $m->run;
+    }
 }
 
 
