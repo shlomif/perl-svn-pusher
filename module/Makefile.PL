@@ -8,6 +8,7 @@ WriteMakefile(
     ABSTRACT            => 'Push to remote subversion repositories',
     NAME                => 'SVN::Pusher',
     VERSION_FROM        => 'lib/SVN/Pusher.pm',
+    ABSTRACT_FROM        => 'lib/SVN/Pusher.pm',
     PREREQ_PM           => {
         'SVN::Core'   => $required_svn,
         'URI::Escape' => '0',
@@ -15,10 +16,6 @@ WriteMakefile(
     EXE_FILES    => [ 
 		'bin/svn-pusher',
 		 ],
-    dist                => {
-        COMPRESS        => 'gzip -9',
-        SUFFIX          => '.gz',
-    },
 );
 
 die "SVN::Core $required_svn must be manually installed"
