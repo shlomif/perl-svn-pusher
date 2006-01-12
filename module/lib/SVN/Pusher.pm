@@ -281,17 +281,6 @@ sub do_init
     $self->{source_path}    = substr ($self -> {source}, length ($self->{source_root})) || '/' ;
     $self->{source_uuid}    = $self -> {source_ra}->get_uuid ();
 
-    if ($self->{source_path} ne '/')
-	{
-        my $result = $self->{source_ra} -> get_file ('', -1, undef) ;
-        $self->{source_lastrev} = $result ->[1]{'svn:entry:committed-rev'} ; 
-	}
-    else
-        {
-        $self->{source_lastrev} = $self->{source_headrev} ; 
-        }
-
-        
     $self->report_msg("Source: $self->{source}");
     $self->report_msg("  Revision: $self->{source_headrev}");
     $self->report_msg("  Root:     $self->{source_root}");
@@ -346,10 +335,6 @@ sub run {
     $self->{endrev} = $endrev ;
     
     my $startrev = $self->{startrev} || 0 ;
-    if ($self->{startrev} && $self->{startrev} eq 'HEAD')
-    {
-        $startrev = $self->{source_lastrev};
-    }
     if (defined($self->{target_source_rev}) && 
         ($self->{target_source_rev} + 1 > $startrev))
     {

@@ -75,7 +75,7 @@ sub do_push
     my %revs ;
     if ($options -> {revision})
     {
-        if ($options->{revision} !~ /^(\d+|HEAD):(\d+|HEAD)$/)
+        if ($options->{revision} !~ /^(\d+):(\d+|HEAD)$/)
         {
             die "Incorrect revision format - there should be two revisions separated by a colon (:).";
         }

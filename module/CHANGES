@@ -1,5 +1,9 @@
 SVN::Pusher changelog:
 
+* 0.03
+    - Removed an svn-pusher remnant that caused problems when specifying paths
+    in the middle of the repositories (instead of the repos root). Now
+    one cannot specify the startrev as HEAD (whatever that means).
 * 0.02
     - Fixed a POD problem pointed to by rajeev@tigr.org
     - Made the program throw an exception if the revision field is 

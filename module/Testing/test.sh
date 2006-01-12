@@ -19,6 +19,7 @@ svn co file://`pwd`/test-repos-src/trunk
 if test "$SKIP_PUSHER" != "" ; then
     exit
 fi
-svn-pusher push --revision=4:6 file://`pwd`/test-repos-src file://`pwd`/test-repos-dest 
+# svn-pusher push --revision=4:6 file://`pwd`/test-repos-src file://`pwd`/test-repos-dest 
+svn-pusher push --revision=4:6 http://localhost:8080/svn-pusher-test/src/trunk svn+ssh://shlomi@localhost`pwd`/test-repos-dest/trunk
     
 # svn checkout file://"$mypath"/
