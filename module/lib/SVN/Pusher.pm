@@ -1,11 +1,15 @@
+use strict;
+use warnings;
+
 use SVN::Core;
 
 package SVN::Pusher::MirrorEditor;
 
+use vars qw(@ISA);
+
 @ISA = ('SVN::Delta::Editor');
 
-use strict;
-use Data::Dumper ;
+use Data::Dumper;
 
 use constant VSNURL => 'svn:wc:ra_dav:version-url';
 
@@ -284,7 +288,7 @@ sub do_init
     $self->report_msg("Source: $self->{source}");
     $self->report_msg("  Revision: $self->{source_headrev}");
     $self->report_msg("  Root:     $self->{source_root}");
-    $self->report_msg("  Path:     $self->{source_path} (rev: $self->{source_lastrev})"); 
+    $self->report_msg("  Path:     $self->{source_path}"); 
 
     $self->{target_ra} = SVN::Ra->new(url => $self->{target},
 			  auth   => $self->{auth},

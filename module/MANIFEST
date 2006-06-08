@@ -1,9 +1,10 @@
+bin/svn-pusher
+CHANGES
+lib/SVN/Pusher/CmdLine.pm
+lib/SVN/Pusher.pm
 Makefile.PL
 MANIFEST
-README
-CHANGES
-bin/svn-pusher
-lib/SVN/Pusher.pm
-lib/SVN/Pusher/CmdLine.pm
 META.yml                                 Module meta-data (added by MakeMaker)
+README
+t/00-load.t
 TODO
