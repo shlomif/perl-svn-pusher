@@ -1,5 +1,10 @@
 SVN::Pusher changelog:
 
+* 0.03001
+    - Fixed a printing of an object variable that was eliminated, that
+    caused a warning under "use warnings;".
+    - Added use warnings and use strict to the top of the code.
+    - Added a rudimentary 00-load.t test file.
 * 0.03
     - Removed an svn-pusher remnant that caused problems when specifying paths
     in the middle of the repositories (instead of the repos root). Now
