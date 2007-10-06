@@ -3,6 +3,8 @@ SVN::Pusher changelog:
 * 0.04
     - Added the --savedate flag. (thanks to DEXTER)
     - Added the --verbatim flag. (thanks to DEXTER)
+    - Removed '\t''s from lib/SVN/Pusher.pm and replaced them with
+    space. (SHLOMIF)
 
 * 0.03001
     - Fixed a printing of an object variable that was eliminated, that

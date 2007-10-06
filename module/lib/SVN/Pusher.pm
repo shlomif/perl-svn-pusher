@@ -32,7 +32,7 @@ sub open_directory {
     my ($self,$path,$pb,undef,$pool) = @_;
     $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});
     return $self->SUPER::open_directory ($path, $pb,
-					 $self->{mirror}{target_headrev}, $pool);
+                     $self->{mirror}{target_headrev}, $pool);
 }
 
 sub open_file {
@@ -40,7 +40,7 @@ sub open_file {
     $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});    
     $self->{opening} = $path;
     return $self->SUPER::open_file ($path, $pb,
-				    $self->{mirror}{target_headrev}, $pool);
+                    $self->{mirror}{target_headrev}, $pool);
 }
 
 sub change_dir_prop {
@@ -49,7 +49,7 @@ sub change_dir_prop {
     # filter wc specified stuff
     return unless $baton;
     return $self->SUPER::change_dir_prop ($baton, @_)
-	unless $_[0] =~ /^svn:(entry|wc):/;
+    unless $_[0] =~ /^svn:(entry|wc):/;
 }
 
 sub change_file_prop {
@@ -57,7 +57,7 @@ sub change_file_prop {
     # filter wc specified stuff
     return unless $_[0];
     return $self->SUPER::change_file_prop (@_)
-	unless $_[1] =~ /^svn:(entry|wc):/;
+    unless $_[1] =~ /^svn:(entry|wc):/;
 }
 
 sub add_directory {
@@ -81,7 +81,7 @@ sub close_directory {
     my $baton = shift;
     return unless $baton;
     $self->{mirror}{VSN} = $self->{NEWVSN}
-	if $baton == $self->{root} && $self->{NEWVSN};
+    if $baton == $self->{root} && $self->{NEWVSN};
     $self->SUPER::close_directory ($baton);
 }
 
@@ -130,8 +130,8 @@ sub get_wc_prop {
     return undef unless $self->{editor}{opening};
     return undef unless $name eq 'svn:wc:ra_dav:version-url';
     return join('/', $self->{mirror}{VSN}, $relpath)
-	if $self->{mirror}{VSN} &&
-	    $self->{editor}{opening} eq $relpath; # skip add_file
+    if $self->{mirror}{VSN} &&
+        $self->{editor}{opening} eq $relpath; # skip add_file
 
     return undef;
 }
@@ -159,11 +159,11 @@ SVN::Pusher - Propagate changesets between two different svn repositories.
     my $m = 
         SVN::Pusher->new(
             source => $sourceurl,
-			target => $desturl',
-			startrev => 100,
-			endrev   => 'HEAD',
-			logmsg   => 'push msg'
-			);
+            target => $desturl',
+            startrev => 100,
+            endrev   => 'HEAD',
+            logmsg   => 'push msg'
+            );
 
     $m->init();
 
@@ -202,9 +202,9 @@ sub committed {
     }
     #$self->{rarepos}->change_rev_prop($rev, 'svn:date', $date);
     #$self->{rarepos}->change_rev_prop($rev, "svm:target_headrev$self->{source}",
-    #				 "$sourcerev",);
+    #                 "$sourcerev",);
     #$self->{rarepos}->change_rev_prop($rev, "svm:vsnroot:$self->{source}",
-    #				 "$self->{VSN}") if $self->{VSN};
+    #                 "$self->{VSN}") if $self->{VSN};
 
     $self->{target_headrev} = $rev;
     $self->{target_source_rev} = $sourcerev ;
@@ -222,34 +222,34 @@ sub mirror
     my $pool = SVN::Pool->new_default ($ppool);
 
     my $tra = $self->{target_update_ra} ||= SVN::Ra->new(url => $self->{target},
-			  auth   => $self->{auth},
-			  pool   => $self->{pool},
-			  config => $self->{config},
-			  );
+              auth   => $self->{auth},
+              pool   => $self->{pool},
+              config => $self->{config},
+              );
 
 
     $msg = $self -> {logmsg} eq '-'?'':$self -> {logmsg} if ($self -> {logmsg}) ;
     
     my $editor = SVN::Pusher::MirrorEditor->new
-	($tra->get_commit_editor(
-	  $self->{verbatim}
+    ($tra->get_commit_editor(
+      $self->{verbatim}
         ? $msg
         : ( ($msg?"$msg\n":'') . ":$rev:$self->{source_uuid}:$date:" )
         ,
-	  sub { $self->committed($date, $rev, @_) },
+      sub { $self->committed($date, $rev, @_) },
         undef, 0));
 
     $editor->{mirror} = $self;
 
     
     my $sra = $self->{source_update_ra} ||= SVN::Ra->new(url => $self->{source},
-			  auth   => $self->{auth},
-			  pool   => $self->{pool},
-			  config => $self->{config},
-			  );
+              auth   => $self->{auth},
+              pool   => $self->{pool},
+              config => $self->{config},
+              );
 
     my $reporter =
-    	$sra->do_update ($rev+1, '' , 1, $editor);
+        $sra->do_update ($rev+1, '' , 1, $editor);
     
     $reporter->set_path ('', $rev, 
         # $self->{target_source_rev}?0:1, 
@@ -267,10 +267,10 @@ sub new {
     $self->{pool}   ||= SVN::Pool->new_default (undef);
     $self->{config} ||= SVN::Core::config_get_config(undef, $self->{pool});
     $self->{auth}   ||= SVN::Core::auth_open ([SVN::Client::get_simple_provider,
-				  SVN::Client::get_ssl_server_trust_file_provider,
-				  SVN::Client::get_ssl_client_cert_file_provider,
-				  SVN::Client::get_ssl_client_cert_pw_file_provider,
-				  SVN::Client::get_username_provider]);
+                  SVN::Client::get_ssl_server_trust_file_provider,
+                  SVN::Client::get_ssl_client_cert_file_provider,
+                  SVN::Client::get_ssl_client_cert_pw_file_provider,
+                  SVN::Client::get_username_provider]);
 
     return $self;
 }
@@ -282,11 +282,11 @@ sub do_init
     my $self = shift;
 
     $self->{source_ra} = SVN::Ra->new(url => $self->{source},
-			  auth   => $self->{auth},
-			  pool   => $self->{pool},
-			  config => $self->{config},
-			  #callback => 'SVN::Pusher::MyCallbacks'
-			  );
+              auth   => $self->{auth},
+              pool   => $self->{pool},
+              config => $self->{config},
+              #callback => 'SVN::Pusher::MyCallbacks'
+              );
     $self->{source_headrev} = $self->{source_ra}->get_latest_revnum;
     $self->{source_root}    = $self -> {source_ra} -> get_repos_root ;
     $self->{source_path}    = substr ($self -> {source}, length ($self->{source_root})) || '/' ;
@@ -298,10 +298,10 @@ sub do_init
     $self->report_msg("  Path:     $self->{source_path}"); 
 
     $self->{target_ra} = SVN::Ra->new(url => $self->{target},
-			  auth   => $self->{auth},
-			  pool   => $self->{pool},
-			  config => $self->{config},
-			  );
+              auth   => $self->{auth},
+              pool   => $self->{pool},
+              config => $self->{config},
+              );
     
     
     $self->{target_headrev} = $self->{target_ra}->get_latest_revnum;
@@ -371,19 +371,19 @@ sub run {
         # strict_node_history
         1,
         # receiver + receiver_baton
-		  sub {
-		      my ($paths, $rev, $author, $date, $msg, $pool) = @_;
+          sub {
+              my ($paths, $rev, $author, $date, $msg, $pool) = @_;
 
-		      eval {
-		      $self->mirror($paths, $rev, $author,
-				    $date, $msg, $pool); } ;
-		      if ($@)
-		          {
-		          my $e = $@ ;
-		          $e =~ s/ at .+$// ;
-		          $self->report_msg($e) ; 
-		          }
-		  });
+              eval {
+              $self->mirror($paths, $rev, $author,
+                    $date, $msg, $pool); } ;
+              if ($@)
+                  {
+                  my $e = $@ ;
+                  $e =~ s/ at .+$// ;
+                  $self->report_msg($e) ; 
+                  }
+          });
 }
 
 
