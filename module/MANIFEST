@@ -1,5 +1,7 @@
 bin/svn-pusher
+Build.PL
 CHANGES
+examples/svn-pusher-test.sh
 lib/SVN/Pusher/CmdLine.pm
 lib/SVN/Pusher.pm
 Makefile.PL
