@@ -5,7 +5,6 @@ my $required_svn = '0.37.0';
 
 WriteMakefile(
     AUTHOR              => 'Shlomi Fish <shlomif@iglu.org.il>',
-    ABSTRACT            => 'Push to remote subversion repositories',
     NAME                => 'SVN::Pusher',
     VERSION_FROM        => 'lib/SVN/Pusher.pm',
     ABSTRACT_FROM        => 'lib/SVN/Pusher.pm',
