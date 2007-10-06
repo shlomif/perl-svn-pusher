@@ -1,6 +1,6 @@
 SVN::Pusher changelog:
 
-* 0.04
+* 0.04         Sat Oct  6 18:26:23 IST 2007
     - Added the --savedate flag. (thanks to DEXTER)
     - Added the --verbatim flag. (thanks to DEXTER)
     - Removed '\t''s from lib/SVN/Pusher.pm and replaced them with
