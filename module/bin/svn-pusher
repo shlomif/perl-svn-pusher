@@ -44,6 +44,15 @@ Push only changes between (including) the two given revision.
 Revision can also be C<HEAD> which means the newest revision in
 the repository.
 
+=item --savedate
+
+Save svn:date property. It requires that a pre-revprop-change exist on
+the destination repository.
+
+=item --verbatim
+
+Do not store uuid and timestamp in log message.
+
 =back
 
 Example:
@@ -64,12 +73,12 @@ sub do_help {
 
 # --------------------------------------------------------------------------
 
-sub opt_push { return ('message|m:s', 'revision|r:s') }
+sub opt_push { return ('message|m:s', 'revision|r:s', 'savedate', 'verbatim') }
 
 
 sub do_push 
 {
-    die "$0 push [--message=<text>] [--revision=<from>:<to>] <source> <target>\n" unless $#_ >= 2;
+    die "$0 push [--message=<text>] [--revision=<from>:<to>] [--savedate] [--verbatim] <source> <target>\n" unless $#_ >= 2;
     my ($options, $source, $target) = @_;
 
     my %revs ;
@@ -84,10 +93,12 @@ sub do_push
     }
 
     my $m = SVN::Pusher::CmdLine->new(
-        target  => $target,
-        source  => $source,
+        target    => $target,
+        source    => $source,
         %revs,
-        logmsg  => $options -> {message}
+        logmsg    => $options -> {message},
+        savedate  => $options -> {savedate},
+        verbatim  => $options -> {verbatim},
         );
 
     if ($m->init () > 0)

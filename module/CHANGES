@@ -1,5 +1,8 @@
 SVN::Pusher changelog:
 
+* 0.04
+    - Added the --savedate flag.
+    - Added the --verbatim flag.
 * 0.03001
     - Fixed a printing of an object variable that was eliminated, that
     caused a warning under "use warnings;".

@@ -140,7 +140,7 @@ sub get_wc_prop {
 
 package SVN::Pusher ;
 
-our $VERSION = '0.03001';
+our $VERSION = '0.04';
 use SVN::Core;
 use SVN::Repos;
 use SVN::Fs;
@@ -196,6 +196,10 @@ sub committed {
     my ($self, $date, $sourcerev, $rev, undef, undef, $pool) = @_;
     my $cpool = SVN::Pool->new_default ($pool);
 
+    if ($self->{savedate})
+    {
+        $self->{target_update_ra}->change_rev_prop($rev, 'svn:date', $date)
+    }
     #$self->{rarepos}->change_rev_prop($rev, 'svn:date', $date);
     #$self->{rarepos}->change_rev_prop($rev, "svm:target_headrev$self->{source}",
     #				 "$sourcerev",);
@@ -228,7 +232,10 @@ sub mirror
     
     my $editor = SVN::Pusher::MirrorEditor->new
 	($tra->get_commit_editor(
-	  ($msg?"$msg\n":'') . ":$rev:$self->{source_uuid}:$date:",
+	  $self->{verbatim}
+        ? $msg
+        : ( ($msg?"$msg\n":'') . ":$rev:$self->{source_uuid}:$date:" )
+        ,
 	  sub { $self->committed($date, $rev, @_) },
         undef, 0));
 
