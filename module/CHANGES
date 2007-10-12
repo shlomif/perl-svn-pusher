@@ -1,5 +1,13 @@
 SVN::Pusher changelog:
 
+* 0.05         Fri Oct 12 14:24:46 IST 2007
+    - Added the --verbose flag to be less verbose by default (thanks to 
+    DEXTER). Resolving:
+        - http://rt.cpan.org/Public/Bug/Display.html?id=29838
+    - Fixed http://rt.cpan.org/Ticket/Display.html?id=29916 - "Verbatim
+    option is broken for svn:// repos. This was due to a possible undefined
+    value that was not handled correctly. (thanks to DEXTER).
+
 * 0.04         Sat Oct  6 18:26:23 IST 2007
     - Added the --savedate flag. (thanks to DEXTER)
     - Added the --verbatim flag. (thanks to DEXTER)

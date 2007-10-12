@@ -11,7 +11,7 @@ sub report
 
     if ($op eq "file")
     {
-        print sprintf("%-3c%s\n", ord($spec->{'file_op'}), $spec->{'path'});
+        print sprintf("   %c %s\n", ord($spec->{'file_op'}), $spec->{'path'});
     }
     elsif ($op eq "msg")
     {

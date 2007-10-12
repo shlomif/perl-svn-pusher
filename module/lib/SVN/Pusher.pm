@@ -30,14 +30,14 @@ sub open_root {
 
 sub open_directory {
     my ($self,$path,$pb,undef,$pool) = @_;
-    $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});
+    $self->obj->report_file($path, 'M');
     return $self->SUPER::open_directory ($path, $pb,
                      $self->{mirror}{target_headrev}, $pool);
 }
 
 sub open_file {
     my ($self,$path,$pb,undef,$pool) = @_;
-    $self->obj->report({'op' => "file", 'file_op' => "U", 'path' => $path});    
+    $self->obj->report_file($path, 'M');
     $self->{opening} = $path;
     return $self->SUPER::open_file ($path, $pb,
                     $self->{mirror}{target_headrev}, $pool);
@@ -65,7 +65,7 @@ sub add_directory {
     my $path = shift;
     my $pb = shift;
     my ($cp_path,$cp_rev,$pool) = @_;
-    $self->obj->report({'op' => "file", 'file_op' => "A", 'path' => $path});    
+    $self->obj->report_file($path, 'A');
     $self->SUPER::add_directory($path, $pb, @_);
 }
 
@@ -95,13 +95,13 @@ sub add_file {
     my $self = shift;
     my $path = shift;
     my $pb = shift;
-    $self->obj->report({'op' => "file", 'file_op' => "A", 'path' => $path});
+    $self->obj->report_file($path, 'A');
     $self->SUPER::add_file($path, $pb, @_);
 }
 
 sub delete_entry {
     my ($self, $path, $rev, $pb, $pool) = @_;
-    $self->obj->report({'op' => "file", 'file_op' => "D", 'path' => $path});
+    $self->obj->report_file($path, 'D');
     $self->SUPER::delete_entry ($path, $rev, $pb, $pool);
 }
 
@@ -192,6 +192,13 @@ sub report_msg
     return $self->report({'op' => 'msg', 'msg' => $msg });
 }
 
+sub report_file {
+    my ($self, $path, $op) = @_;
+    if ($self->{verbose}) {
+	$self->report({'op' => "file", 'file_op' => $op, 'path' => $path});
+    }
+}
+
 sub committed {
     my ($self, $date, $sourcerev, $rev, undef, undef, $pool) = @_;
     my $cpool = SVN::Pool->new_default ($pool);
@@ -229,12 +236,17 @@ sub mirror
 
 
     $msg = $self -> {logmsg} eq '-'?'':$self -> {logmsg} if ($self -> {logmsg}) ;
-    
+    my $def_msg = 
+        defined($msg) 
+            ?  ( $msg . ($self->{verbatim} ? "" : "\n") )
+            : '';
+
+    my $full_msg = $def_msg
+        . ($self->{verbatim} ? "" : ":$rev:$self->{source_uuid}:$date:");
+
     my $editor = SVN::Pusher::MirrorEditor->new
     ($tra->get_commit_editor(
-      $self->{verbatim}
-        ? $msg
-        : ( ($msg?"$msg\n":'') . ":$rev:$self->{source_uuid}:$date:" )
+        $full_msg
         ,
       sub { $self->committed($date, $rev, @_) },
         undef, 0));

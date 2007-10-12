@@ -53,6 +53,10 @@ the destination repository.
 
 Do not store uuid and timestamp in log message.
 
+=item -v --verbose
+
+Print extra information.
+
 =back
 
 Example:
@@ -73,12 +77,24 @@ sub do_help {
 
 # --------------------------------------------------------------------------
 
-sub opt_push { return ('message|m:s', 'revision|r:s', 'savedate', 'verbatim') }
+sub opt_push {
+    return qw{
+	message|m:s
+	revision|r:s
+	savedate
+	verbatim
+	verbose|v
+    };
+}
 
 
 sub do_push 
 {
-    die "$0 push [--message=<text>] [--revision=<from>:<to>] [--savedate] [--verbatim] <source> <target>\n" unless $#_ >= 2;
+    if (@_ < 2)
+    {
+        die "Not enough arguments provided; try '$0 help' for more info\n";
+    }
+
     my ($options, $source, $target) = @_;
 
     my %revs ;
@@ -99,6 +115,7 @@ sub do_push
         logmsg    => $options -> {message},
         savedate  => $options -> {savedate},
         verbatim  => $options -> {verbatim},
+        verbose   => $options -> {verbose},
         );
 
     if ($m->init () > 0)
