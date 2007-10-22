@@ -1,5 +1,11 @@
 SVN::Pusher changelog:
 
+* 0.06         Mon Oct 22 11:05:58 IST 2007
+    - Added the --version/version flag to svn-pusher to display the
+    version number
+    - Added more POD to SVN::Pusher with links to various resources including
+    the Subversion repository.
+
 * 0.05         Fri Oct 12 14:24:46 IST 2007
     - Added the --verbose flag to be less verbose by default (thanks to 
     DEXTER). Resolving:

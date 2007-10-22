@@ -140,7 +140,7 @@ sub get_wc_prop {
 
 package SVN::Pusher ;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 use SVN::Core;
 use SVN::Repos;
 use SVN::Fs;
@@ -398,6 +398,48 @@ sub run {
           });
 }
 
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-test-run-cmdline@rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=SVN-Pusher>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc SVN::Pusher
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/SVN::Pusher>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/SVN::Pusher>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=SVN::Pusher>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/SVN::Pusher/>
+
+=back
+
+=head1 SOURCE AVAILABILITY
+
+The latest source of SVN::Pusher is available from its
+BerliOS Subversion repository:
+
+L<http://svn.berlios.de/svnroot/repos/web-cpan/SVN-Pusher/>
 
 =head1 AUTHORS
 
