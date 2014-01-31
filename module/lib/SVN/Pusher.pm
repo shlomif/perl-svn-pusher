@@ -157,7 +157,7 @@ SVN::Pusher - Propagate changesets between two different svn repositories.
 
 =head1 SYNOPSIS
 
-    my $m = 
+    my $m =
         SVN::Pusher->new(
             source => $sourceurl,
             target => $desturl',
@@ -222,7 +222,7 @@ sub committed {
 }
 # ------------------------------------------------------------------------
 
-sub mirror 
+sub mirror
     {
     my ($self, $paths, $rev, $author, $date, $msg, $ppool) = @_;
 
@@ -237,8 +237,8 @@ sub mirror
 
 
     $msg = $self -> {logmsg} eq '-'?'':$self -> {logmsg} if ($self -> {logmsg}) ;
-    my $def_msg = 
-        defined($msg) 
+    my $def_msg =
+        defined($msg)
             ?  ( $msg . ($self->{verbatim} ? "" : "\n") )
             : '';
 
@@ -254,7 +254,7 @@ sub mirror
 
     $editor->{mirror} = $self;
 
-    
+
     my $sra = $self->{source_update_ra} ||= SVN::Ra->new(url => $self->{source},
               auth   => $self->{auth},
               pool   => $self->{pool},
@@ -263,9 +263,9 @@ sub mirror
 
     my $reporter =
         $sra->do_update ($rev+1, '' , 1, $editor);
-    
-    $reporter->set_path ('', $rev, 
-        # $self->{target_source_rev}?0:1, 
+
+    $reporter->set_path ('', $rev,
+        # $self->{target_source_rev}?0:1,
         0,
         undef);
     $reporter->finish_report ();
@@ -290,7 +290,7 @@ sub new {
 
 # ------------------------------------------------------------------------
 
-sub do_init 
+sub do_init
     {
     my $self = shift;
 
@@ -308,25 +308,25 @@ sub do_init
     $self->report_msg("Source: $self->{source}");
     $self->report_msg("  Revision: $self->{source_headrev}");
     $self->report_msg("  Root:     $self->{source_root}");
-    $self->report_msg("  Path:     $self->{source_path}"); 
+    $self->report_msg("  Path:     $self->{source_path}");
 
     $self->{target_ra} = SVN::Ra->new(url => $self->{target},
               auth   => $self->{auth},
               pool   => $self->{pool},
               config => $self->{config},
               );
-    
-    
+
+
     $self->{target_headrev} = $self->{target_ra}->get_latest_revnum;
     $self->{target_root}    = $self -> {target_ra} -> get_repos_root ;
-    
+
     $self->{target_path}    = substr ($self -> {target}, length ($self->{target_root})) ||'/' ;
-    
+
     $self->report_msg( "Target: $self->{target}") ;
-    $self->report_msg("  Revision: $self->{target_headrev}") ; 
+    $self->report_msg("  Revision: $self->{target_headrev}") ;
     $self->report_msg("  Root:     $self->{target_root}") ;
-    $self->report_msg("  Path:     $self->{target_path}") ; 
-    
+    $self->report_msg("  Path:     $self->{target_path}") ;
+
     return 1 ;
     }
 
@@ -335,12 +335,12 @@ sub do_init
 # This method is essentialy do_init(). In the original SVN::Push there were
 # both init() and do_init() which were different from a reason. Here, they
 # are essentially the same.
-sub init 
+sub init
 {
     my $self = shift;
-    
+
     return $self -> do_init ;
-}    
+}
 
 # ------------------------------------------------------------------------
 
@@ -357,28 +357,28 @@ sub run {
         $endrev = $self->{source_headrev};
     }
     $self->{endrev} = $endrev ;
-    
+
     my $startrev = $self->{startrev} || 0 ;
-    if (defined($self->{target_source_rev}) && 
+    if (defined($self->{target_source_rev}) &&
         ($self->{target_source_rev} + 1 > $startrev))
     {
         $startrev = $self->{target_source_rev} + 1;
     }
     $self->{startrev} = $startrev ;
-    
+
     return unless $endrev == -1 || $startrev <= $endrev;
 
     $self->report_msg("Retrieving log information from $startrev to $endrev");
 
     $self -> {source_ra} -> get_log (
         # paths
-        [''], 
+        [''],
         # start_rev
-        $startrev, 
+        $startrev,
         # end_rev
-        $endrev-1, 
+        $endrev-1,
         # limit
-        0, 
+        0,
         # discover_changed_paths
         1,
         # strict_node_history
@@ -394,7 +394,7 @@ sub run {
                   {
                   my $e = $@ ;
                   $e =~ s/ at .+$// ;
-                  $self->report_msg($e) ; 
+                  $self->report_msg($e) ;
                   }
           });
 }

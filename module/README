@@ -1,11 +1,11 @@
-This is the README file for SVN::Push, a subversion repository 
+This is the README file for SVN::Push, a subversion repository
 distribution tool.
 
 Subversion is a version control system, you can find more information
 at http://subversion.tigris.org/.
 
 svn-pusher is a command line utility that allows one to propagate ("push")
-changesets between two repositories. SVN::Pusher is the back-end, and 
+changesets between two repositories. SVN::Pusher is the back-end, and
 SVN::Pusher::CmdLine is its derived class, that also reports messages
 to the command line.
 
@@ -22,7 +22,7 @@ SVN::Push uses the stanard perl module install process:
 
 * Configuration
 
-After install the module, see perldoc bin/svnpush and perldoc Push.pm for more 
+After install the module, see perldoc bin/svnpush and perldoc Push.pm for more
 information.
 
 * AUTHORS
