@@ -6,6 +6,9 @@ module/Makefile
 module/Makefile.old
 module/Makefile.PL
 module/META.yml
+module/META.json
+module/MYMETA.yml
+module/MYMETA.json
 module/pm_to_blib
 module/Testing/svn-prop.tmp
 module/Testing/testing
@@ -14,3 +17,4 @@ module/Testing/test-repos-dest
 module/Testing/test-repos-src
 module/Testing/trunk
 module/Testing/wc
+module/SVN-Pusher-*
