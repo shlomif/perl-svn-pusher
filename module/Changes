@@ -4,6 +4,7 @@ SVN::Pusher changelog:
     - Add strict and warnings to all modules.
     - Add the LICENSE file.
     - Add t/cpan-changes.t and t/style-trailing-space.t .
+    - Add t/pod.t .
 
 0.06        2007-10-22
     - Added the --version/version flag to svn-pusher to display the
