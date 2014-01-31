@@ -1,0 +1,16 @@
+syntax:glob
+module/blib
+module/_build
+module/Build
+module/Makefile
+module/Makefile.old
+module/Makefile.PL
+module/META.yml
+module/pm_to_blib
+module/Testing/svn-prop.tmp
+module/Testing/testing
+module/Testing/test-repos
+module/Testing/test-repos-dest
+module/Testing/test-repos-src
+module/Testing/trunk
+module/Testing/wc
