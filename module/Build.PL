@@ -11,6 +11,9 @@ use Test::Run::Builder;
 
 my $builder = Test::Run::Builder->new(
     module_name => "SVN::Pusher",
+    configure_requires => {
+        'Module::Build' => '0.36',
+    },
     requires =>
     {
         'SVN::Core'   => 0,
