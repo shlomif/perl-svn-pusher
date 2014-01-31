@@ -1,9 +1,15 @@
 # This file is under the MIT X11 License:
 # http://www.opensource.org/licenses/mit-license.php
 
-use Module::Build;
+use strict;
+use warnings;
 
-my $build = Module::Build->new(
+use File::Spec;
+use lib File::Spec->catdir(File::Spec->curdir(), "inc");
+
+use Test::Run::Builder;
+
+my $builder = Test::Run::Builder->new(
     module_name => "SVN::Pusher",
     requires =>
     {
@@ -16,5 +22,5 @@ my $build = Module::Build->new(
     script_files => ["bin/svn-pusher"],
 );
 
-$build->create_build_script;
+$builder->create_build_script;
 
