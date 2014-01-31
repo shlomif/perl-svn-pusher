@@ -2,6 +2,7 @@ SVN::Pusher changelog:
 
 * 0.07
     - Add strict and warnings to all modules.
+    - Add LICENSE .
 
 * 0.06         Mon Oct 22 11:05:58 IST 2007
     - Added the --version/version flag to svn-pusher to display the
