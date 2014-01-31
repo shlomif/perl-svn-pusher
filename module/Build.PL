@@ -23,6 +23,13 @@ my $builder = Test::Run::Builder->new(
     license => "perl",
     create_makefile_pl => 'traditional',
     script_files => ["bin/svn-pusher"],
+    meta_merge =>
+    {
+        resources =>
+        {
+            repository => "https://bitbucket.org/shlomif/perl-svn-pusher",
+        },
+    },
 );
 
 $builder->create_build_script;
