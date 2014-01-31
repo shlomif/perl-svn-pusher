@@ -1,5 +1,8 @@
 SVN::Pusher changelog:
 
+* 0.07
+    - Add strict and warnings to all modules.
+
 * 0.06         Mon Oct 22 11:05:58 IST 2007
     - Added the --version/version flag to svn-pusher to display the
     version number
@@ -7,7 +10,7 @@ SVN::Pusher changelog:
     the Subversion repository.
 
 * 0.05         Fri Oct 12 14:24:46 IST 2007
-    - Added the --verbose flag to be less verbose by default (thanks to 
+    - Added the --verbose flag to be less verbose by default (thanks to
     DEXTER). Resolving:
         - http://rt.cpan.org/Public/Bug/Display.html?id=29838
     - Fixed http://rt.cpan.org/Ticket/Display.html?id=29916 - "Verbatim
@@ -33,7 +36,7 @@ SVN::Pusher changelog:
 
 * 0.02
     - Fixed a POD problem pointed to by rajeev@tigr.org
-    - Made the program throw an exception if the revision field is 
+    - Made the program throw an exception if the revision field is
       incorrect.
     - Fixes http://rt.cpan.org/NoAuth/Bug.html?id=16779
 
@@ -46,7 +49,7 @@ SVN::Pusher changelog:
     the main module has no side effects.
     - Removed the create option in init()/cmdline/etc.
     - Adapted the documentation to the new version.
-    
+
 * 0.00_03 - forked from SVN-Push, converted the functionality to work with
 a modern SVN, and with what we wanted to do (just changeset propagation -
 nothing more, nothing less).

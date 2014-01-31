@@ -10,3 +10,4 @@ META.yml                                 Module meta-data (added by MakeMaker)
 README
 t/00-load.t
 TODO
+META.json

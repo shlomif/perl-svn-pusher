@@ -1,10 +1,11 @@
+package SVN::Pusher::MirrorEditor;
+
 use strict;
 use warnings;
 
+use 5.008;
+
 use SVN::Core;
-
-package SVN::Pusher::MirrorEditor;
-
 use vars qw(@ISA);
 
 @ISA = ('SVN::Delta::Editor');

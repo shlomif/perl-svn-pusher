@@ -1,5 +1,10 @@
 package SVN::Pusher::CmdLine;
 
+use strict;
+use warnings;
+
+use 5.008;
+
 use base 'SVN::Pusher';
 
 sub report
