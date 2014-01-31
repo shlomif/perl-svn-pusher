@@ -141,7 +141,7 @@ sub get_wc_prop {
 
 package SVN::Pusher ;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 use SVN::Core;
 use SVN::Repos;
 use SVN::Fs;
