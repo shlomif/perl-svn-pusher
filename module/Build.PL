@@ -16,6 +16,7 @@ my $builder = Test::Run::Builder->new(
     },
     requires =>
     {
+        'perl'        => '5.8.8',
         'SVN::Core'   => 0,
         'URI::Escape' => '0',
     },
