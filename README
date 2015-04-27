@@ -1,0 +1,6 @@
+svn-pusher is a command line utility that allows one to propagate ("push")
+changesets between two repositories. SVN::Pusher is the back-end, and
+SVN::Pusher::CmdLine is its derived class, that also reports messages
+to the command line.
+
+For more information, see https://metacpan.org/release/SVN-Pusher .
