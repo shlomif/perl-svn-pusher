@@ -11,7 +11,7 @@ $| = 1;
 
 =head1 NAME
 
-svn-pusher - command line interface for propagating Subversion changesets. 
+svn-pusher - command line interface for propagating Subversion changesets.
 
 =head1 SYNOPSIS
 
@@ -30,7 +30,7 @@ to another.
 
 Displays the version number.
 
-=item push [options] B<srcurl> B<desturl> 
+=item push [options] B<srcurl> B<desturl>
 
 Invoke the push of B<srcurl> to B<desturl>
 
@@ -102,7 +102,7 @@ sub opt_push {
 }
 
 
-sub do_push 
+sub do_push
 {
     if (@_ < 2)
     {
