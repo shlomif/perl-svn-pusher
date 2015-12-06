@@ -1,5 +1,8 @@
 SVN::Pusher changelog:
 
+0.09        2015-12-06
+    - Change old E-mail address.
+
 0.08        2014-04-10
     - Add minimum perl version (CPANTS).
 

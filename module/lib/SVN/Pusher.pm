@@ -444,7 +444,7 @@ L<http://svn.berlios.de/svnroot/repos/web-cpan/SVN-Pusher/>
 
 =head1 AUTHORS
 
-Shlomi Fish E<lt>shlomif@iglu.org.ilE<gt>
+Shlomi Fish ( L<http://www.shlomifish.org/> ).
 
 (based on SVN::Push by Gerald Richter E<lt>richter@dev.ecos.deE<gt>)
 
